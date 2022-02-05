@@ -13,12 +13,20 @@ public class Main {
     static int sum(String in){
         int result = 0;
         for(int i=0;i<in.length();i++){
-            /*строка разбивается на отдельные символы, создаются отдельные объекты Scanner,
-            в качестве потока принимающие эти символы. Если входной символ был цифрой, она прибавляется
-            к результату - сумме цифр в строке
+            /*строка разбивается на отдельные символы, идёт попытка преобразовать каждый символ
+            в int, при успехе цифра прибавляется к сумме цифр
              */
-            Scanner scanner = new Scanner(String.valueOf(in.charAt(i)));
-            if(scanner.hasNextInt()) result+=scanner.nextInt();
+            char[] inChar = in.toCharArray();
+            int newDigit = 0;
+            try{
+                newDigit = Integer.parseInt(String.valueOf(inChar[i]));
+            }
+            catch (Exception e){
+                newDigit = 0;
+            }
+            finally {
+                result+=newDigit;
+            }
         }
         return result;
     }
