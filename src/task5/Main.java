@@ -59,11 +59,18 @@ public class Main {
                             //иначе копируется содержимое сейфа ячейкой выше того же столбца
                         }
                         else{
-                            matrix[i][j]=new Safe(matrix[i][j - 1].getContent(), matrix[i][j - 1].getCurrWeight(), matrix[i][j - 1].getCurrValue());
-                            //если новое содержимое не помещается, копируется содержимое сейфа предыдущей ячейки той же строки
+                            if(matrix[i][j-1].getCurrValue()>matrix[i-1][j].getCurrValue())
+                                matrix[i][j]=new Safe(matrix[i][j - 1].getContent(), matrix[i][j - 1].getCurrWeight(), matrix[i][j - 1].getCurrValue());
+                            else
+                                matrix[i][j]=new Safe(matrix[i-1][j].getContent(), matrix[i-1][j].getCurrWeight(), matrix[i-1][j].getCurrValue());
+                            /*если новое содержимое не помещается, копируется содержимое сейфа предыдущей ячейки той же строки
+                            или ячейки выше того же столбца, в зависимости от того, чья ченность выше
+                             */
                         }
                     }
-                    else matrix[i][j] = new Safe(matrix[i-1][j].getContent(), matrix[i-1][j].getCurrWeight(), matrix[i-1][j].getCurrValue());
+                    else{
+                        matrix[i][j] = new Safe(matrix[i-1][j].getContent(), matrix[i-1][j].getCurrWeight(), matrix[i-1][j].getCurrValue());
+                    }
 
                 }
             }
