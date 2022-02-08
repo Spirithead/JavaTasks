@@ -39,9 +39,10 @@ public class Main {
                 if(i==0||j==0) matrix[i][j]=new Safe(new ArrayList<>(),0,0);
                 //нулевые строки и столбцы заполняются сейфами с нулевой ценностью
                 else{
-                    if(items.get(i-1).getWeight()<=j){//если один предмет помещается в пустой сейф текущей вместимости
-                        int newWeight = items.get(i-1).getWeight()+matrix[i][j-items.get(i-1).getWeight()].getCurrWeight();
-                        int newValue = items.get(i-1).getValue()+matrix[i][j-items.get(i-1).getWeight()].getCurrValue();
+                    Item currItem = items.get(i-1);
+                    if(currItem.getWeight()<=j){//если один предмет помещается в пустой сейф текущей вместимости
+                        int newWeight = currItem.getWeight()+matrix[i][j-currItem.getWeight()].getCurrWeight();
+                        int newValue = currItem.getValue()+matrix[i][j-currItem.getWeight()].getCurrValue();
                     /*вычисляются вес и ценность сейфа, которые он предположительно будет иметь
                     при копировании содержимого сейфа c вместимостью = (текущий вес - вес предмета) той же строки
                     и добавлении ещё одного предмета
@@ -51,8 +52,8 @@ public class Main {
                             копируется содержимое сейфа c вместимостью = (текущий вес - вес предмета) той же строки
                             и добавляется предмет
                             */
-                                matrix[i][j] = new Safe(matrix[i][j-items.get(i-1).getWeight()].getContent(), matrix[i][j-items.get(i-1).getWeight()].getCurrWeight(), matrix[i][j-items.get(i-1).getWeight()].getCurrValue());
-                                matrix[i][j].addItem(items.get(i-1));
+                                matrix[i][j] = new Safe(matrix[i][j-currItem.getWeight()].getContent(), matrix[i][j-currItem.getWeight()].getCurrWeight(), matrix[i][j-currItem.getWeight()].getCurrValue());
+                                matrix[i][j].addItem(currItem);
                             }
                             else matrix[i][j] = new Safe(matrix[i-1][j].getContent(), matrix[i-1][j].getCurrWeight(), matrix[i-1][j].getCurrValue());
                             //иначе копируется содержимое сейфа ячейкой выше того же столбца
